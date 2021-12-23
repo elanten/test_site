@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %} Лекарственные средства {% endblock %}
+{% block container %} 
+
+<div class="row">
+    <div class="col">
+     {% include 'nav.html' with context %}
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr class="bg-warning">
+            <th class="text-center" scope="col">№</th>
+            <th class="text-center" scope="col">МНН</th>
+            <th class="text-center" scope="col">ТН</th>
+            <th class="text-center" scope="col">ЖНВЛП</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr><td class="bg-secondary text-white text-center" colspan="4">ЛС в перечне ЖНВЛП</td></tr>
+        {# тут проверки на пустой список нет, но всегда можно добавить #}
+        {% for row in ven %}
+        <tr>
+            <td>{{ loop.index }}</td> {# текущий "круг" цикла, начиная с 1 #}
+            <td>{{ row['mnn'] }}</td>
+            <td>{{ row['tn'] |replace('\n', '<br/>')|safe }}</td>
+            <td class="text-center">V</td>
+        </tr>
+        {% endfor %}
+        <tr><td class="bg-secondary text-white text-center" colspan="4">Остальные ЛС</td></tr>
+        {% for row in other %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ row['mnn'] }}</td>
+            <td>{{ row['tn'] |replace('\n', '<br/>')|safe }}</td>
+            <td class="text-center">N</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+<ul class="nav nav-tabs">
+                        {# активный класс css  определяем по имени текущей view-функции #}
+    <li class="nav-item"><a class="nav-link {{'active' if request.endpoint == 'spending'}}" href="{{url_for('spending')}}">Затраты</a></li>
+    <li class="nav-item"><a class="nav-link {{'active' if request.endpoint == 'spending_by_mnn'}}" href="{{url_for('spending_by_mnn')}}">Затраты по МНН</a></li>
+    <li class="nav-item"><a class="nav-link {{'active' if request.endpoint == 'medicine'}}" href="{{url_for('medicine')}}">Лекарственные средства</a></li>
+</ul>

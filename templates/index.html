@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %} Главная {% endblock %}
+{% block container %} 
+<div class="row">
+    <div class="col">
+        <ul>
+            <li><a href="{{url_for('spending')}}">Затраты</a></li>
+            <li><a href="{{url_for('spending_by_mnn')}}">Затраты по МНН</a></li>
+            <li><a href="{{url_for('medicine')}}">Лекарственные средства</a></li>
+            <li><a href="{{url_for('spending_api')}}">Затраты api<i class="bi-link-45deg text-warning"></i></a></li>
+            <li><a href="{{url_for('spending_by_mnn_api')}}">Затраты по МНН api<i class="bi-link-45deg text-warning"></i></a></li>
+            <li><a href="{{url_for('medicine_api')}}">Лекарственные средства api<i class="bi-link-45deg text-warning"></i></a></li>
+            <li><a href="{{url_for('react')}}">ReactJS</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}    

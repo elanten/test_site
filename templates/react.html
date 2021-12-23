@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} Главная - Реакт {% endblock %}
+{% block container %} 
+
+<div class="row">
+    <div class="col">
+        <div id="react_head"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div id="react_body"></div>
+    </div>
+</div>
+
+{% endblock %}    
+{% block body_end %}
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    {# все ради простоты... главное не забыть убрать #}
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- Load React component. -->
+    {# технически все библиотеки должны лежать в статике, а еще лучше - обслуживаться отдельным веб-сервером #}
+    <script type="text/babel" src="{{url_for('static', filename='app.js')}}"></script>
+{% endblock %}

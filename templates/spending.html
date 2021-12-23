@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %} Затраты {% endblock %}
+{% block container %} 
+
+<div class="row">
+    <div class="col">
+        {% include 'nav.html' with context %}
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+    {# Тут есть нюанс - итоговая строка будет даже в пустом Фрейме, и если у на только одна запись, можно считать что спиок пуст #} 
+    {# В остальном тут один сплошной html #}
+    {% if rows and rows|count > 1 %}
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr  class="bg-warning">
+            <th scope="col">Международное непатентованное наименование</th>
+            <th scope="col">Торговое наименование</th>
+            <th scope="col">Форма выпуска</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Затраты</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in rows %}
+        <tr>
+            {% if not loop.last %}
+            <td>{{ row['Международное непатентованное наименование'] }}</td>
+            {# Тут тоже есть некоторая проблема - подразумевается что поле ТН содержит только "безопасные" теги #}
+            <td>{{ row['Торговое наименование'] |replace('\n', '<br/>')|safe }}</td>
+            <td>{{ row['Форма выпуска'] |replace('\n', '<br/>')|safe }}</td>
+            {# Фрейм на последней групповой операции привел все значения к float #}
+            <td>{{ row['Количество'] |int }}</td>
+            {# Есть фильтр round(2), но он отрезает крайний ноль справа, т.е. 7.50 выведет как 7.5 #}
+            <td>{{ '%.2f'|format(row['Цена']) }}</td>
+            <td>{{ '%.2f'|format(row['Затраты']) }}</td>
+            {% else %} {# Последняя строка - итог  #}
+            <td colspan="3"></td> 
+            <td class='border-2 border-warning fw-bold'>{{ row['Количество'] |int }}</td>
+            <td class='border-2 border-warning fw-bold'>{{ '%.2f'|format(row['Цена']) }}</td>
+            <td class='border-2 border-warning fw-bold'>{{ '%.2f'|format(row['Затраты']) }}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <h4>Список пуст</h4>
+    {% endif %}    
+    </div>
+</div>
+
+{% endblock %}
